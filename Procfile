@@ -1,0 +1,1 @@
+web: python -m gunicorn goodfire_webapp.app:app 

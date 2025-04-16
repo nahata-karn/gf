@@ -1,77 +1,65 @@
 # Goodfire Feature Explorer
 
-A web application for exploring and visualizing AI-generated text features using the Goodfire API. This application allows users to input questions or statements and see what features are detected in the text.
+A Flask web application that leverages the Goodfire AI API to analyze and display features of LLM (Large Language Model) responses.
 
-## Features
+## Overview
 
-- Modern, responsive UI built with Bootstrap
-- Integration with Goodfire's API for real feature extraction
-- Interactive feature visualization with animated progress bars
-- Categorized features (Intent, Sentiment, Entity, Style, Other)
-- Toggle feature categories on/off with checkboxes
-- Real-time feedback with loading indicators
+This application allows users to:
+1. Enter questions or statements
+2. Receive AI-generated responses using the Goodfire API
+3. Explore different categories of features present in the response (philosophy, writing style, tone, scientific concepts)
+4. Adjust feature weights to generate new versions of the response
 
 ## Project Structure
 
 ```
 goodfire_webapp/
-├── app.py                 # Flask application with Goodfire API integration
+├── app.py             # Main Flask application
 ├── static/
-│   ├── script.js          # Client-side JavaScript
-│   └── style.css          # Custom CSS styles
+│   ├── script.js      # Main JavaScript for the application
+│   ├── style.css      # CSS styling for the application
+│   └── app.js         # Additional JavaScript functionality
 └── templates/
-    └── index.html         # HTML template
+    ├── index.html     # Main application page
+    └── error.html     # Error page
 ```
 
-## Installation
+## Features
 
-1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/goodfire-feature-explorer.git
-cd goodfire-feature-explorer
-```
+- Interactive web interface for exploring AI features
+- Feature categories: philosophy, writing style, tone, scientific concepts
+- Feature visualization with strength indicators
+- Response regeneration with adjusted feature weights
+- Error handling and user feedback
 
-2. Create a virtual environment and activate it:
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
+## Requirements
 
-3. Install the required packages:
-```bash
-pip install -r requirements.txt
-```
+See requirements.txt for the complete list of dependencies:
+- Flask
+- Goodfire API client
+- Additional Python libraries
 
-## Running the Application
+## Setup
 
-1. Start the Flask development server:
-```bash
-python goodfire_webapp/app.py
-```
+1. Clone the repository
+2. Install dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
+3. Configure your Goodfire API key (instructions for getting a key: [https://goodfire.ai/](https://goodfire.ai/))
+4. Run the application:
+   ```
+   python goodfire_webapp/app.py
+   ```
+5. Open a browser and navigate to http://localhost:5000
 
-2. Open your web browser and navigate to:
-```
-http://127.0.0.1:5000/
-```
+## Technical Details
 
-## How to Use
+- Backend: Flask (Python)
+- Frontend: HTML, CSS, JavaScript, Bootstrap 5
+- API: Goodfire AI API for LLM feature analysis
+- Asynchronous operations for API calls
 
-1. Enter a question or statement in the text area
-2. Click the "Generate" button
-3. View the AI-generated response
-4. Explore the detected features, categorized by type
-5. Toggle feature categories using the checkboxes
+## Credits
 
-## Customizing Model Selection
-
-The application uses "meta-llama/Llama-3.1-8B-Instruct" as the default model. You can change this by setting the `GOODFIRE_MODEL` environment variable before starting the application.
-
-## License
-
-MIT
-
-## Acknowledgements
-
-- Goodfire for the feature extraction API
-- Bootstrap for the responsive UI framework
-- Flask for the backend web framework 
+Developed using the Goodfire AI API for feature analysis and generation. 
