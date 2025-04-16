@@ -2,9 +2,16 @@ services:
   - type: web
     name: goodfire-feature-explorer
     env: python
-    buildCommand: pip install -r requirements.txt
+    buildCommand: |
+      pip install -r requirements.txt
+      chmod +x build.sh
+      ./build.sh
     startCommand: python -m gunicorn goodfire_webapp.app:app --log-level debug
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
+      - key: FLASK_ENV
+        value: production
+      - key: FLASK_DEBUG
+        value: "1"
     staticPublishPath: ./goodfire_webapp/static 
