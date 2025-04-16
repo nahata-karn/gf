@@ -17,8 +17,8 @@ MODEL_NAME = os.environ.get("GOODFIRE_MODEL", "meta-llama/Meta-Llama-3.1-8B-Inst
 
 # Initialize Goodfire client with hardcoded API key
 try:
-    # Use AsyncClient instead of Client for async operations
-    client = goodfire.AsyncClient(api_key=API_KEY)
+    # Use standard Client instead of AsyncClient
+    client = goodfire.Client(api_key=API_KEY)
     api_key_valid = True
 except Exception as e:
     print(f"Error initializing Goodfire client: {str(e)}")
@@ -31,23 +31,14 @@ def index():
                             error_message="There was a problem connecting to the Goodfire API. Please try again later.")
     return render_template('index.html')
 
-# Helper function to run async tasks
-def run_async(coro):
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-    try:
-        return loop.run_until_complete(coro)
-    finally:
-        loop.close()
-
-# Async function to get features for specific categories
-async def get_category_features(inspector, category, k=5):
+# Function to get features for specific categories
+def get_category_features(inspector, category, k=5):
     # Use rerank to find features matching the category
     all_features = inspector.top(k=50)  # Get more features initially to filter
     feature_group = goodfire.FeatureGroup([f.feature for f in all_features])
     
     # Rerank to find features related to the given category
-    reranked = await client.features.rerank(
+    reranked = client.features.rerank(
         features=feature_group,
         query=category,
         model=inspector.model,
@@ -72,12 +63,12 @@ async def get_category_features(inspector, category, k=5):
 # Store feature cache by label for easier lookup
 feature_cache = {}
 
-# Async function to handle Goodfire API calls
-async def generate_response(question, model_variant, selected_categories, custom_weights=None):
+# Function to handle Goodfire API calls
+def generate_response(question, model_variant, selected_categories, custom_weights=None):
     # For the first request (without custom weights), just generate a normal response
     if not custom_weights or len(custom_weights) == 0:
         # Generate response
-        response = await client.chat.completions.create(
+        response = client.chat.completions.create(
             messages=[{"role": "user", "content": question}],
             model=model_variant,
             max_completion_tokens=300
@@ -92,7 +83,7 @@ async def generate_response(question, model_variant, selected_categories, custom
         ]
         
         # Inspect the response for features
-        inspector = await client.features.inspect(
+        inspector = client.features.inspect(
             messages=conversation,
             model=model_variant
         )
@@ -100,7 +91,7 @@ async def generate_response(question, model_variant, selected_categories, custom
         # Get features by category
         features_by_category = {}
         for category in selected_categories:
-            features_by_category[category] = await get_category_features(inspector, category)
+            features_by_category[category] = get_category_features(inspector, category)
             
             # Store features in cache for later use with feature adjustment
             for feature_data in features_by_category[category]:
@@ -142,7 +133,7 @@ async def generate_response(question, model_variant, selected_categories, custom
                     feature_label = feature_cache[uuid_str]['label']
                     
                     # Search specifically for this feature label
-                    specific_features = await client.features.search(
+                    specific_features = client.features.search(
                         feature_label,
                         model=temp_variant,
                         top_k=3
@@ -173,7 +164,7 @@ async def generate_response(question, model_variant, selected_categories, custom
             print("No features were successfully adjusted, using default variant")
         
         # Now generate the response with the modified variant
-        response = await client.chat.completions.create(
+        response = client.chat.completions.create(
             messages=[{"role": "user", "content": question}],
             model=model_variant,
             max_completion_tokens=300
@@ -188,7 +179,7 @@ async def generate_response(question, model_variant, selected_categories, custom
         ]
         
         # Inspect the response for features
-        inspector = await client.features.inspect(
+        inspector = client.features.inspect(
             messages=conversation,
             model=model_variant
         )
@@ -196,7 +187,7 @@ async def generate_response(question, model_variant, selected_categories, custom
         # Get features by category
         features_by_category = {}
         for category in selected_categories:
-            features_by_category[category] = await get_category_features(inspector, category)
+            features_by_category[category] = get_category_features(inspector, category)
         
         return model_response, features_by_category
 
@@ -220,8 +211,8 @@ def generate():
         # Create a model variant
         variant = goodfire.Variant(MODEL_NAME)
         
-        # Run async function in sync context
-        model_response, features = run_async(generate_response(question, variant, selected_categories, custom_weights))
+        # Run synchronous function
+        model_response, features = generate_response(question, variant, selected_categories, custom_weights)
         
         return jsonify({
             'response': model_response,
