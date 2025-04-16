@@ -11,11 +11,11 @@ load_dotenv()
 
 app = Flask(__name__)
 
-# Goodfire API configuration with hardcoded API key
-API_KEY = "sk-goodfire-IqKhz6CY6s-Z_pCrBE4zYljsY_PGOMHkxL3fpZ-lC5Z-U4VgfL-WGQ"
+# Goodfire API configuration from environment variables
+API_KEY = os.environ.get("API_KEY", "sk-goodfire-IqKhz6CY6s-Z_pCrBE4zYljsY_PGOMHkxL3fpZ-lC5Z-U4VgfL-WGQ")
 MODEL_NAME = os.environ.get("GOODFIRE_MODEL", "meta-llama/Meta-Llama-3.1-8B-Instruct")
 
-# Initialize Goodfire client with hardcoded API key
+# Initialize Goodfire client with API key
 try:
     # Use standard Client instead of AsyncClient
     client = goodfire.Client(api_key=API_KEY)
