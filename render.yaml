@@ -3,7 +3,8 @@ services:
     name: goodfire-feature-explorer
     env: python
     buildCommand: pip install -r requirements.txt
-    startCommand: python -m gunicorn goodfire_webapp.app:app
+    startCommand: python -m gunicorn goodfire_webapp.app:app --log-level debug
     envVars:
       - key: PYTHON_VERSION
-        value: 3.11.0 
+        value: 3.11.0
+    staticPublishPath: ./goodfire_webapp/static 
