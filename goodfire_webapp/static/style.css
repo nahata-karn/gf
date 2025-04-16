@@ -1,0 +1,224 @@
+/* Main styling */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+.card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+/* Response section styling */
+.response-text {
+    min-height: 100px;
+    line-height: 1.6;
+}
+
+/* Feature styling */
+.feature-list {
+    margin-top: 10px;
+}
+
+.feature-item {
+    margin-bottom: 20px;
+    padding: 12px;
+    border-radius: 6px;
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+}
+
+.feature-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.feature-name {
+    font-weight: 500;
+}
+
+.feature-value {
+    font-family: monospace;
+    color: #0d6efd;
+}
+
+/* Slider styling */
+.feature-slider-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.feature-slider {
+    flex-grow: 1;
+    transition: all 0.2s ease;
+}
+
+.slider-changed {
+    accent-color: #fd7e14; /* Orange color to indicate a changed value */
+}
+
+.feature-slider-value {
+    font-family: monospace;
+    min-width: 30px;
+    text-align: center;
+}
+
+/* Regenerate button */
+#regenerate-btn {
+    margin: 15px auto 0;
+    display: block;
+    width: 100%;
+    max-width: 300px;
+}
+
+/* Tab styling */
+#response-tabs {
+    border-bottom: 1px solid #dee2e6;
+}
+
+#response-tabs .nav-link {
+    color: #495057;
+    border: 1px solid transparent;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+#response-tabs .nav-link.active {
+    color: #0d6efd;
+    background-color: #fff;
+    border-color: #dee2e6 #dee2e6 #fff;
+}
+
+#response-tab-content {
+    padding: 15px 0;
+}
+
+.tab-pane {
+    padding: 10px 0;
+}
+
+/* Category containers */
+.feature-category {
+    transition: all 0.3s ease;
+}
+
+.feature-category.hidden {
+    display: none;
+}
+
+/* Animation for features */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.feature-item {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+/* Make text area resize vertically only */
+textarea {
+    resize: vertical;
+}
+
+/* Loading spinner */
+#loadingSpinner {
+    padding: 20px;
+}
+
+/* Button styling */
+.btn-primary {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    padding: 8px 16px;
+    transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+}
+
+/* Error message styling */
+.alert-danger {
+    border-left: 4px solid #dc3545;
+}
+
+/* Header and footer styling */
+header h1 {
+    color: #0d6efd;
+    font-weight: 600;
+}
+
+footer {
+    padding-top: 20px;
+    border-top: 1px solid #e9ecef;
+}
+
+/* Responsive design improvements */
+@media (max-width: 992px) {
+    .feature-category {
+        margin-bottom: 15px;
+    }
+}
+
+/* Additional styles for Goodfire Feature Explorer */
+
+.feature-category {
+    transition: all 0.3s ease;
+}
+
+.feature-strength {
+    transition: width 1s ease-out;
+}
+
+/* Colored strength bars for different categories */
+#philosophyFeatures .feature-strength {
+    background-color: #6f42c1; /* Purple for philosophy */
+}
+
+#writingStyleFeatures .feature-strength {
+    background-color: #0d6efd; /* Blue for writing style */
+}
+
+#scienceFeatures .feature-strength {
+    background-color: #20c997; /* Teal for science */
+}
+
+#toneFeatures .feature-strength {
+    background-color: #fd7e14; /* Orange for tone */
+}
+
+/* Highlight effect when hovering over features */
+.feature-item:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+    border-radius: 4px;
+}
+
+/* Custom styling for response text */
+#responseText {
+    line-height: 1.6;
+    font-size: 1.05rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .row {
+        flex-direction: column;
+    }
+    
+    .col-md-5, .col-md-7 {
+        width: 100%;
+    }
+} 
