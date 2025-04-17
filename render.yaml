@@ -6,7 +6,7 @@ services:
       pip install -r requirements.txt
       chmod +x build.sh
       ./build.sh
-    startCommand: python -m gunicorn goodfire_webapp.app:app --log-level debug
+    startCommand: python -m gunicorn goodfire_webapp.app:app --log-level debug --timeout 120 --workers 2 --threads 2
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
@@ -14,4 +14,6 @@ services:
         value: production
       - key: FLASK_DEBUG
         value: "1"
+      - key: WEB_CONCURRENCY
+        value: "2"
     staticPublishPath: ./goodfire_webapp/static 
